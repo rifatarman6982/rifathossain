@@ -1,14 +1,72 @@
 import { motion } from "motion/react";
 import { Download, ChevronDown } from "lucide-react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { type Container, type ISourceOptions } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
+
+const ROLES = ["UI/UX Designer", "Problem Solver", "UI Animator", "UX Researcher"];
+const LONGEST_ROLE = ROLES.reduce(
+  (longest, role) => (role.length > longest.length ? role : longest),
+  ROLES[0]
+);
+
+const HomeBackground = memo(function HomeBackground({
+  init,
+  particlesOptions,
+}: {
+  init: boolean;
+  particlesOptions: ISourceOptions;
+}) {
+  return (
+    <>
+      {init && (
+        <div
+          className="absolute inset-0 z-0"
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+        >
+          <Particles
+            id="tsparticles"
+            options={particlesOptions}
+            style={{ position: "absolute", width: "100%", height: "100%" }}
+          />
+        </div>
+      )}
+
+      <div className="absolute inset-0 z-0">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
+        />
+      </div>
+    </>
+  );
+});
 
 export function HomeSection() {
   const [init, setInit] = useState(false);
   const [typedText, setTypedText] = useState("");
-  const fullText = "UI/UX Designer";
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -18,18 +76,43 @@ export function HomeSection() {
     });
   }, []);
 
-  // Typing effect
   useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index <= fullText.length) {
-        setTypedText(fullText.substring(0, index));
-        index++;
-      } else {
-        clearInterval(timer);
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    const type = () => {
+      const fullText = ROLES[roleIndex];
+
+      setTypedText(fullText.substring(0, charIndex));
+
+      if (!isDeleting && charIndex < fullText.length) {
+        charIndex += 1;
+        timeoutId = setTimeout(type, 100);
+        return;
       }
-    }, 100);
-    return () => clearInterval(timer);
+
+      if (!isDeleting && charIndex === fullText.length) {
+        isDeleting = true;
+        timeoutId = setTimeout(type, 1400);
+        return;
+      }
+
+      if (isDeleting && charIndex > 0) {
+        charIndex -= 1;
+        timeoutId = setTimeout(type, 50);
+        return;
+      }
+
+      isDeleting = false;
+      roleIndex = (roleIndex + 1) % ROLES.length;
+      timeoutId = setTimeout(type, 250);
+    };
+
+    type();
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const particlesOptions: ISourceOptions = useMemo(
@@ -133,51 +216,20 @@ export function HomeSection() {
     }
   };
 
+  const scrollToContact = () => {
+    const element = document.getElementById("contact");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section
       id="home"
       className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-zinc-100 via-zinc-50 to-zinc-100 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 overflow-hidden transition-colors duration-300"
-      style={{ isolation: 'isolate' }}
+      style={{ isolation: "isolate" }}
     >
-      {/* Particles Background - Only for Home Section */}
-      {init && (
-        <div className="absolute inset-0 z-0" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-          <Particles
-            id="tsparticles"
-            options={particlesOptions}
-            style={{ position: 'absolute', width: '100%', height: '100%' }}
-          />
-        </div>
-      )}
-
-      {/* Animated Background */}
-      <div className="absolute inset-0 z-0">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-        />
-      </div>
+      <HomeBackground init={init} particlesOptions={particlesOptions} />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
         <div className="max-w-4xl">
@@ -205,7 +257,14 @@ export function HomeSection() {
             className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8"
           >
             <div className="h-px w-12 sm:w-16 bg-gradient-to-r from-cyan-400 to-transparent" />
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-zinc-600 dark:text-zinc-400">{typedText}</p>
+            <div className="relative min-w-[16ch] sm:min-w-[18ch] md:min-w-[20ch]">
+              <span className="invisible text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal">
+                {LONGEST_ROLE}
+              </span>
+              <p className="absolute inset-0 whitespace-nowrap text-lg sm:text-xl md:text-2xl lg:text-3xl text-zinc-600 dark:text-zinc-400">
+                {typedText}
+              </p>
+            </div>
           </motion.div>
 
           <motion.p
@@ -235,10 +294,10 @@ export function HomeSection() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={scrollToAbout}
+              onClick={scrollToContact}
               className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-cyan-400 text-cyan-400 rounded-full font-semibold hover:bg-cyan-400 hover:text-white transition-all text-sm sm:text-base"
             >
-              Learn More
+              Hire Me
             </motion.button>
           </motion.div>
         </div>

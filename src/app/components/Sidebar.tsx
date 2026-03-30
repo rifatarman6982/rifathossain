@@ -16,6 +16,58 @@ const navItems = [
   { id: "contact", label: "Contact", icon: Mail },
 ];
 
+function ProfileImage({
+  sizeClassName,
+  borderClassName,
+}: {
+  sizeClassName: string;
+  borderClassName: string;
+}) {
+  return (
+    <div className={`relative ${sizeClassName}`}>
+      <motion.div
+        animate={{
+          scale: [1, 1.08, 1],
+          opacity: [0.2, 0.65, 0.2],
+          boxShadow: [
+            "0 0 0 0 rgba(34,211,238,0.08)",
+            "0 0 0 8px rgba(34,211,238,0.16)",
+            "0 0 0 0 rgba(34,211,238,0.08)",
+          ],
+        }}
+        transition={{
+          duration: 2.6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute inset-0 rounded-full border border-cyan-400/30 pointer-events-none"
+      />
+      <motion.div
+        animate={{
+          opacity: [0.35, 0.8, 0.35],
+        }}
+        transition={{
+          duration: 1.8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute -inset-2 rounded-full bg-gradient-to-r from-cyan-400/0 via-cyan-400/35 to-blue-500/0 blur-md pointer-events-none"
+      />
+      <div className={`relative w-full h-full overflow-hidden rounded-full ${borderClassName}`}>
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-400/30 via-transparent to-blue-500/25 pointer-events-none" />
+        <div className="absolute inset-[2px] rounded-full bg-white/70 dark:bg-zinc-950/70 backdrop-blur-sm pointer-events-none" />
+        <div className="absolute inset-0 rounded-full shadow-[0_0_28px_rgba(34,211,238,0.22)] pointer-events-none" />
+        <img
+          src="/assets/hero_img.png"
+          alt="Profile"
+          className="relative z-10 w-full h-full object-contain p-1.5 sm:p-2 transition-transform duration-500 hover:scale-105"
+        />
+        <div className="absolute inset-0 rounded-full bg-gradient-to-t from-zinc-950/18 via-transparent to-white/18 dark:from-zinc-950/30 dark:to-cyan-100/8 pointer-events-none" />
+      </div>
+    </div>
+  );
+}
+
 export function Sidebar({ activeSection }: SidebarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -35,13 +87,12 @@ export function Sidebar({ activeSection }: SidebarProps) {
         animate={{ opacity: 1, scale: 1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="fixed top-6 right-6 z-50 lg:hidden w-12 h-12 rounded-full overflow-hidden border-2 border-cyan-400 shadow-lg shadow-cyan-500/20"
+        className="fixed top-6 right-6 z-50 lg:hidden"
         aria-label="Toggle menu"
       >
-        <img
-          src="https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHBvcnRyYWl0JTIwbWFufGVufDF8fHx8MTc3NDE3MTIzMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-          alt="Profile"
-          className="w-full h-full object-cover"
+        <ProfileImage
+          sizeClassName="w-12 h-12"
+          borderClassName="border-2 border-cyan-400/70 shadow-lg shadow-cyan-500/20"
         />
       </motion.button>
 
@@ -132,11 +183,10 @@ function SidebarContent({ activeSection, scrollToSection }: SidebarContentProps)
         transition={{ delay: 0.2 }}
         className="text-center mb-6 sm:mb-8"
       >
-        <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-cyan-400/20">
-          <img
-            src="https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHBvcnRyYWl0JTIwbWFufGVufDF8fHx8MTc3NDE3MTIzMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-            alt="Profile"
-            className="w-full h-full object-cover"
+        <div className="mx-auto mb-4 w-fit">
+          <ProfileImage
+            sizeClassName="w-28 h-28 sm:w-32 sm:h-32"
+            borderClassName="border-4 border-cyan-400/35 shadow-xl shadow-cyan-500/15"
           />
         </div>
         <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-white mb-1">Md Rifat Hossain</h2>

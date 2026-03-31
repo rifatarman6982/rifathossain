@@ -240,7 +240,8 @@ function SidebarContent({ activeSection, scrollToSection }: SidebarContentProps)
         <p className="text-zinc-500 text-xs sm:text-sm text-center mb-3 sm:mb-4">Follow Me</p>
         <div className="flex justify-center gap-2 sm:gap-3">
           <motion.a
-            href="#"
+            href="https://www.facebook.com/rifatarman22/"
+            target="_blank"
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.95 }}
             className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-100 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:bg-cyan-400 hover:text-white transition-all duration-300"
@@ -249,7 +250,8 @@ function SidebarContent({ activeSection, scrollToSection }: SidebarContentProps)
             <Facebook size={18} />
           </motion.a>
           <motion.a
-            href="#"
+            href="https://www.behance.net/rifatarman1"
+            target="_blank"
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.95 }}
             className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-100 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:bg-cyan-400 hover:text-white transition-all duration-300"
@@ -258,7 +260,8 @@ function SidebarContent({ activeSection, scrollToSection }: SidebarContentProps)
             <FaBehance className="w-4 h-4 sm:w-5 sm:h-5" />
           </motion.a>
           <motion.a
-            href="#"
+            href="https://www.linkedin.com/in/rifat-hossain82/"
+            target="_blank"
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.95 }}
             className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-100 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:bg-cyan-400 hover:text-white transition-all duration-300"
@@ -267,7 +270,8 @@ function SidebarContent({ activeSection, scrollToSection }: SidebarContentProps)
             <Linkedin size={18} />
           </motion.a>
           <motion.a
-            href="#"
+            href="https://dribbble.com/search/Md-Rifat-Hossain"
+            target="_blank"
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.95 }}
             className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-100 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:bg-cyan-400 hover:text-white transition-all duration-300"

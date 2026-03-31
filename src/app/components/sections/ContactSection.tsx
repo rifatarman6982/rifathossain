@@ -21,6 +21,29 @@ const contactInfo = [
   },
 ];
 
+const socialLinks = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/rifatarman22/",
+    icon: <Facebook size={18} />,
+  },
+  {
+    label: "Behance",
+    href: "https://www.behance.net/rifatarman1",
+    icon: <FaBehance size={18} />,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/rifat-hossain82/",
+    icon: <Linkedin size={18} />,
+  },
+  {
+    label: "Dribbble",
+    href: "https://dribbble.com/search/Md-Rifat-Hossain",
+    icon: <Dribbble size={18} />,
+  },
+];
+
 // Random transition variants
 const transitions = [
   { duration: 0.6, ease: "easeInOut" },
@@ -131,46 +154,31 @@ export function ContactSection() {
                 Follow Me
               </h4>
               <div className="flex gap-2 sm:gap-3">
-                <motion.a
-                  href="https://www.facebook.com/rifatarman22/"
-                  target="_blank"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-100 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:bg-cyan-400 hover:text-white transition-all"
-                  aria-label="Facebook"
-                >
-                  <Facebook size={18} />
-                </motion.a>
-                <motion.a
-                  href="https://www.behance.net/rifatarman1"
-                  target="_blank"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-100 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:bg-cyan-400 hover:text-white transition-all"
-                  aria-label="Behance"
-                >
-                  <FaBehance size={18} />
-                </motion.a>
-                <motion.a
-                  href="https://www.linkedin.com/in/rifat-hossain82/"
-                  target="_blank"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-100 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:bg-cyan-400 hover:text-white transition-all"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={18} />
-                </motion.a>
-                <motion.a
-                  href="https://dribbble.com/search/Md-Rifat-Hossain"
-                  target="_blank"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-100 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:bg-cyan-400 hover:text-white transition-all"
-                  aria-label="Dribbble"
-                >
-                  <Dribbble size={18} />
-                </motion.a>
+                {socialLinks.map((link, index) => (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{
+                      duration: 0.35,
+                      delay: 0.7 + index * 0.08,
+                    }}
+                    whileHover={{ y: -6, scale: 1.06 }}
+                    whileTap={{ scale: 0.94 }}
+                    className="group relative flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center overflow-hidden rounded-xl border border-zinc-200/80 bg-white/80 text-zinc-600 shadow-lg shadow-zinc-200/40 transition-all duration-500 hover:border-cyan-300/50 hover:text-white hover:shadow-cyan-500/30 dark:border-zinc-700/80 dark:bg-zinc-800/80 dark:text-zinc-400 dark:shadow-black/10"
+                    aria-label={link.label}
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 transition-all duration-500 group-hover:opacity-100" />
+                    <span className="absolute inset-[1px] rounded-[11px] bg-white/90 transition-all duration-500 group-hover:scale-0 dark:bg-zinc-900/90" />
+                    <span className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.45),transparent_55%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <span className="relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6">
+                      {link.icon}
+                    </span>
+                  </motion.a>
+                ))}
               </div>
             </motion.div>
           </motion.div>

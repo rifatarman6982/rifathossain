@@ -174,7 +174,7 @@ export function ContactSection() {
                     <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 transition-all duration-500 group-hover:opacity-100" />
                     <span className="absolute inset-[1px] rounded-[11px] bg-white/90 transition-all duration-500 group-hover:scale-0 dark:bg-zinc-900/90" />
                     <span className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.45),transparent_55%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                    <span className="relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6">
+                    <span className="relative z-10 transition-all duration-500 group-hover:scale-110 group-hover:-rotate-6 group-hover:text-white">
                       {link.icon}
                     </span>
                   </motion.a>
